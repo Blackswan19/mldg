@@ -1,5 +1,5 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>BsGoder</title> <script src="https://cdn.tailwindcss.com"></script> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/zVrgfX9h/bsnewlg.png"> <script src="funmain.js"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <link rel="stylesheet" href="funmain.css"> </head> <body class="flex flex-col items-center justify-start min-h-screen"> <div class="container"> <i class="fa-solid fa-ellipsis-vertical menu-icon" id="menu-icon"></i> <div id="day-popup" class="day-popup"></div> <div id="greeting"></div> <div class="controls"> <div class="flex items-center"> <label for="language" id="language-label" class="mr-2 text-lg font-semibold text-gray-700"></label> <select id="language" onchange="updateDisplay()"> <option value="en">English</option> <option value="hi">Hindi</option> <option value="te">Telugu</option> </select> </div> <div class="flex items-center"> <label for="gender" id="gender-label" class="mr-2 text-lg font-semibold text-gray-700"></label> <select id="gender" onchange="updateDisplay()"> <option value="male">Male</option> <option value="female">Female</option> </select> </div> <div id="current-day" class="card"></div> </div> <div id="modal" class="modal"> <div class="modal-content"> <h2 id="modal-day"></h2> <img id="modal-image" class="deity-image mx-auto mb-3" alt="Deity Image" onerror="this.src='https://via.placeholder.com/128';"> <p id="modal-deity" class="mb-2"></p> <p id="modal-attire" class="mb-2"></p> <p id="modal-tips"></p> <button id="close-modal" class="mt-4 p-2 bg-red-600 text-white rounded-md hover:bg-red-700"></button> </div> </div> </div>
-<script>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>BsGoder</title> <script src="https://cdn.tailwindcss.com"></script> <link rel="icon" type="image/x-icon" href="https://i.ibb.co/zVrgfX9h/bsnewlg.png"> <link rel="stylesheet" href="funmain.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> <style> .color-display { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; } .color-box { width: 300px; height: 150px; border: 1px solid #000000; border-radius: 30px; } .color-item { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 1.5rem; } .color-label { margin-top: 8px; font-size: 14px; } </style> </head> <body class="flex flex-col items-center justify-start min-h-screen bg-gray-100"> <div class="container mx-auto p-4 relative"> <i class="fa-solid fa-ellipsis-vertical menu-icon" id="menu-icon"></i> <div id="day-popup" class="day-popup"></div> <div id="greeting" class="text-2xl font-bold mb-4"></div> <div class="controls flex flex-col sm:flex-row gap-4 mb-4"> <div class="flex items-center"> <label for="language" id="language-label" class="mr-2 text-lg font-semibold text-gray-700"></label> <select id="language" onchange="updateDisplay()" aria-label="Select Language"> <option value="en" data-lang="en">English</option> <option value="hi" data-lang="hi">हिन्दी</option> <option value="te" data-lang="te">తెలుగు</option> </select> </div> <div class="flex items-center"> <label for="gender" id="gender-label" class="mr-2 text-lg font-semibold text-gray-700"></label> <select id="gender" onchange="updateDisplay()" aria-label="Select Gender"> <option value="male" data-lang-en="Male" data-lang-hi="पुरुष" data-lang-te="పురుషుడు">Male</option> <option value="female" data-lang-en="Female" data-lang-hi="महिला" data-lang-te="స్త్రీ">Female</option> </select> </div> </div> <div id="current-day" class="card"></div> <div id="modal" class="modal"> <div class="modal-content"> <h2 id="modal-day" class="text-xl font-bold mb-3"></h2> <img id="modal-image" class="deity-image mx-auto mb-3" alt="Deity Image" onerror="this.src='https://via.placeholder.com/128';"> <p id="modal-deity" class="mb-2"></p> <p id="modal-attire" class="mb-2"></p> <p id="modal-tips"></p> <button id="close-modal" class="mt-4 p-2 bg-red-600 text-white rounded-md hover:bg-red-700"></button> </div> </div> <div id="color-display" class="color-display"></div> </div>
+  <script>
     const translations = {
       en: {
         languageLabel: "Language",
@@ -7,7 +7,28 @@
         closeModal: "Close",
         deity: "Deity",
         attireColor: "Attire Color",
-        worshipTips: "Worship Tips"
+        worshipTips: "Worship Tips",
+        languageOptions: { en: "English", hi: "Hindi", te: "Telugu" },
+        genderOptions: { male: "Male", female: "Female" },
+        dayNames: {
+          Sunday: "Sunday",
+          Monday: "Monday",
+          Tuesday: "Tuesday",
+          Wednesday: "Wednesday",
+          Thursday: "Thursday",
+          Friday: "Friday",
+          Saturday: "Saturday"
+        },
+        colorTranslations: {
+          White: "White",
+          Maroon: "Maroon",
+          Red: "Red",
+          Saffron: "Saffron",
+          Green: "Green",
+          Yellow: "Yellow",
+          Pink: "Pink",
+          NavyBlue: "Navy Blue"
+        }
       },
       hi: {
         languageLabel: "भाषा",
@@ -15,7 +36,28 @@
         closeModal: "बंद करें",
         deity: "देवता",
         attireColor: "पहनावे का रंग",
-        worshipTips: "पूजा सुझाव"
+        worshipTips: "पूजा सुझाव",
+        languageOptions: { en: "अंग्रेजी", hi: "हिन्दी", te: "तेलुगु" },
+        genderOptions: { male: "पुरुष", female: "महिला" },
+        dayNames: {
+          Sunday: "रविवार",
+          Monday: "सोमवार",
+          Tuesday: "मंगलवार",
+          Wednesday: "बुधवार",
+          Thursday: "गुरुवार",
+          Friday: "शुक्रवार",
+          Saturday: "शनिवार"
+        },
+        colorTranslations: {
+          White: "सफेद",
+          Maroon: "मैरून",
+          Red: "लाल",
+          Saffron: "केसरिया",
+          Green: "हरा",
+          Yellow: "पीला",
+          Pink: "गुलाबी",
+          NavyBlue: "नेवी नीला"
+        }
       },
       te: {
         languageLabel: "భాష",
@@ -23,7 +65,28 @@
         closeModal: "మూసివేయండి",
         deity: "దైవం",
         attireColor: "వస్త్ర రంగు",
-        worshipTips: "పూజా సూచనలు"
+        worshipTips: "పూజా సూచనలు",
+        languageOptions: { en: "ఆంగ్లం", hi: "హిందీ", te: "తెలుగు" },
+        genderOptions: { male: "పురుషుడు", female: "స్త్రీ" },
+        dayNames: {
+          Sunday: "ఆదివారం",
+          Monday: "సోమవారం",
+          Tuesday: "మంగళవారం",
+          Wednesday: "బుధవారం",
+          Thursday: "గురువారం",
+          Friday: "శుక్రవారం",
+          Saturday: "శనివారం"
+        },
+        colorTranslations: {
+          White: "తెలుపు",
+          Maroon: "మెరూన్",
+          Red: "ఎరుపు",
+          Saffron: "కాషాయం",
+          Green: "ఆకుపచ్చ",
+          Yellow: "పసుపు",
+          Pink: "గులాబీ",
+          NavyBlue: "నీలం"
+        }
       }
     };
 
@@ -34,27 +97,27 @@
     };
 
     const colorMap = {
-      White: "White",
-      Maroon: "Maroon",
-      Red: "Red",
-      Saffron: "Saffron",
-      Green: "Green",
-      Yellow: "Yellow",
-      Pink: "Pink",
-      NavyBlue: "Navy Blue"
+      White: { css: "#FFFFFF", name: "White" },
+      Maroon: { css: "#800000", name: "Maroon" },
+      Red: { css: "#FF0000", name: "Red" },
+      Saffron: { css: "#FF9933", name: "Saffron" },
+      Green: { css: "#008000", name: "Green" },
+      Yellow: { css: "#FFFF00", name: "Yellow" },
+      Pink: { css: "#FF69B4", name: "Pink" },
+      NavyBlue: { css: "#000080", name: "NavyBlue" }
     };
 
     const tipsData = [
-      { name: "Sunday", deity: { en: "Surya or Durga", hi: "सूर्य या दुर्गा", te: "సూర్యుడు లేదా దుర్గ" }, color: "Maroon", image: "https://i.pinimg.com/originals/44/8c/a4/448ca414e77025b8273286b366d5eaa3.gif", tips: { male: { en: "Wear <span style='color: #a92222; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Maroon</span> for Surya and offer water at sunrise, or for Durga and chant Durga mantras.", hi: "सूर्य के लिए मैरून पहनें और सूर्योदय पर जल अर्पित करें, या दुर्गा के लिए और दुर्गा मंत्र जपें।", te: "సూర్యునికి మెరూన్ ధరించి ఉదయాన్నే నీరు సమర్పించండి, లేదా దుర్గకు దుర్గా మంత్రాలు జపించండి." }, female: { en: "Wear maroon for Surya and pray facing east, or for Durga and offer red flowers.", hi: "सूर्य के लिए मैरून पहनें और पूर्व की ओर प्रार्थना करें, या दुर्गा के लिए और लाल फूल अर्पित करें।", te: "సూర్యునికి మెరూన్ ధరించి తూర్పు దిశలో ప్రార్థించండి, లేదా దుర్గకు ఎరుపు పుష్పాలు సమర్పించండి." } } },
-      { name: "Monday", deity: { en: "Shiva or Parvati", hi: "शिव या पार्वती", te: "శివుడు లేదా పార్వతి" }, color: "White", image: "https://i.pinimg.com/originals/fa/ba/c3/fabac3f50522ae1bbda98da8390325ce.gif", tips: { male: { en: "Wear <span style='color: white; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>White</span> for Shiva and chant 'Om Namah Shivaya', or for Parvati and offer bilva leaves.", hi: "शिव के लिए सफेद पहनें और 'ॐ नमः शिवाय' जपें, या पार्वती के लिए और बिल्व पत्र अर्पित करें।", te: "శివునికి తెలుపు ధరించి 'ఓం నమః శివాయ' జపించండి, లేదా పార్వతికి మారేడు ఆకులు సమర్పించండి." }, female: { en: "Wear white for Shiva and offer milk to Shiva linga, or for Parvati and pray for harmony.", hi: "शिव के लिए सफेद पहनें और शिवलिंग पर दूध अर्पित करें, या पार्वती के लिए और सौहार्द के लिए प्रार्थना करें।", te: "శివునికి తెలుపు ధరించి శివలింగానికి పాలు సమర్పించండి, లేదా పార్వతికి సామరస్యం కోసం ప్రార్థించండి." } } },
-      { name: "Tuesday", deity: { en: "Durga, Kali or Hanuman", hi: "दुर्गा, काली या हनुमान", te: "దుర్గ, కాళీ లేదా హనుమాన్" }, colorMale: "Red", colorFemale: "Saffron", image: "https://i.pinimg.com/originals/26/86/46/268646032cde46546e0b17c570a181f0.gif", tips: { male: { en: "Wear <span style='color: red; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Red</span> for Durga and chant mantras, for Kali and offer hibiscus, or for Hanuman and chant Hanuman Chalisa.", hi: "दुर्गा के लिए लाल पहनें और मंत्र जपें, काली के लिए और गुड़हल अर्पित करें, या हनुमान के लिए और हनुमान चालीसा पढ़ें।", te: "దుర్గకు ఎరుపు ధరించి మంత్రాలు జపించండి, కాళీకి మందారం సమర్పించండి, లేదా హనుమాన్‌కు హనుమాన్ చాలీసా పారాయణం చేయండి." }, female: { en: "Wear saffron for Durga and offer red flowers, for Kali and pray for strength, or for Hanuman and offer sindoor.", hi: "दुर्गा के लिए केसरिया पहनें और लाल फूल अर्पित करें, काली के लिए और शक्ति के लिए प्रार्थना करें, या हनुमान के लिए और सिंदूर अर्पित करें।", te: "దుర్గకు కాషాయం ధరించి ఎరుపు పుష్పాలు సమర్పించండి, కాళీకి శక్తి కోసం ప్రార్థించండి, లేదా హనుమాన్‌కు సిందూరం సమర్పించండి." } } },
-      { name: "Wednesday", deity: { en: "Ganesha or Ayyappa", hi: "गणेश या अय्यप्पा", te: "గణేశుడు లేదా అయ్యప్ప" }, color: "Green", image: "https://i.pinimg.com/originals/09/74/5b/09745b1ef070b6929fc520243e90d8b7.gif", tips: { male: { en: "Wear <span style='color: green; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Green</span> for Ganesha and offer modak, or for Ayyappa and chant 'Swamiye Saranam Ayyappa'.", hi: "गणेश के लिए हरा पहनें और मोदक अर्पित करें, या अय्यप्पा के लिए और 'स्वामीये शरणम अय्यप्पा' जपें।", te: "గణేశునికి ఆకుపచ్చ ధరించి మోదకాలు సమర్పించండి, లేదా అయ్యప్పకు 'స్వామియే శరణం అయ్యప్ప' జపించండి." }, female: { en: "Wear green for Ganesha and pray for success, or for Ayyappa and offer ghee lamps.", hi: "गणेश के लिए हरा पहनें और सफलता की प्रार्थना करें, या अय्यप्पा के लिए और घी का दीपक अर्पित करें।", te: "గణేశునికి ఆకుపచ్చ ధరించి విజయం కోసం ప్రార్థించండి, లేదా అయ్యప్పకు నెయ్యి దీపాలు సమర్పించండి." } } },
-      { name: "Thursday", deity: { en: "Brihaspati or Lakshmi", hi: "बृहस्पति या लक्ष्मी", te: "బృహస్పతి లేదా లక్ష్మి" }, color: "Yellow", image: "https://i.pinimg.com/originals/22/a2/ed/22a2ed183673a013f4f1ae42ebd9860d.gif", tips: { male: { en: "Wear <span style='color: yellow; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Yellow</span> for Brihaspati and pray for wisdom, or for Lakshmi and worship for prosperity.", hi: "बृहस्पति के लिए पीला पहनें और बुद्धि के लिए प्रार्थना करें, या लक्ष्मी के लिए और समृद्धि के लिए पूजा करें।", te: "బృహస్పతికి పసుపు ధరించి జ్ఞానం కోసం ప్రార్థించండి, లేదా లక్ష్మికి సంపద కోసం పూజించండి." }, female: { en: "Wear yellow for Brihaspati and offer turmeric, or for Lakshmi and offer lotus flowers.", hi: "बृहस्पति के लिए पीला पहनें और हल्दी अर्पित करें, या लक्ष्मी के लिए और कमल के फूल अर्पित करें।", te: "బృహస్పతికి పసుపు ధరించి పసుపు సమర్పించండి, లేదా లక్ష్మికి తామర పుష్పాలు సమర్పించండి." } } },
-      { name: "Friday", deity: { en: "Durga, Lakshmi or Santoshi Mata", hi: "दुर्गा, लक्ष्मी या संतोषी माता", te: "దుర్గ, లక్ష్మి లేదా సంతోషి మాత" }, color: "Pink", image: "https://i.pinimg.com/originals/f8/ca/e6/f8cae63a049646879bbe5daad901b626.gif", tips: { male: { en: "Wear <span style='color: pink; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Pink</span> for Durga and chant mantras, for Lakshmi and worship for prosperity, or for Santoshi Mata and offer jaggery.", hi: "दुर्गा के लिए गुलाबी पहनें और मंत्र जपें, लक्ष्मी के लिए और समृद्धि के लिए पूजा करें, या संतोषी माता के लिए और गुड़ अर्पित करें।", te: "దుర్గకు గులాబీ ధరించి మంత్రాలు జపించండి, లక్ష్మికి సంపద కోసం పూజించండి, లేదా సంతోషి మాతకు బెల్లం సమర్పించండి." }, female: { en: "Wear pink for Durga and offer red flowers, for Lakshmi and offer lotus flowers, or for Santoshi Mata and pray for contentment.", hi: "दुर्गा के लिए गुलाबी पहनें और लाल फूल अर्पित करें, लक्ष्मी के लिए और कमल के फूल अर्पित करें, या संतोषी माता के लिए और संतोष के लिए प्रार्थना करें।", te: "దుర్గకు గులాబీ ధరించి ఎరుపు పుష్పాలు సమర్పించండి, లక్ష్మికి తామర పుష్పాలు సమర్పించండి, లేదా సంతోషి మాతకు సంతృప్తి కోసం ప్రార్థించండి." } } },
-      { name: "Saturday", deity: { en: "Shani, Kali or Surya", hi: "शनि, काली या सूर्य", te: "శని, కాళీ లేదా సూర్యుడు" }, color: "NavyBlue", image: "https://i.pinimg.com/originals/82/2a/fc/822afc5b6d4864bc0fa943e795e539fa.gif", tips: { male: { en: "Wear <span style='color: #245bff; padding: 5px 15px; background: #000000; border-radius: 1000px; font-weight: 600;'>Navy blue</span> for Shani and offer oil, for Kali and chant mantras, or for Surya and offer water at sunrise.", hi: "शनि के लिए नेवी नीला पहनें और तेल अर्पित करें, काली के लिए और मंत्र जपें, या सूर्य के लिए और सूर्योदय पर जल अर्पित करें।", te: "శనికి నీలం ధరించి నూనె సమర్పించండి, కాళీకి మంత్రాలు జపించండి, లేదా సూర్యునికి ఉదయాన్నే నీరు సమర్పించండి." }, female: { en: "Wear navy blue for Shani and pray for protection, for Kali and offer hibiscus, or for Surya and pray facing east.", hi: "शनि के लिए नेवी नीला पहनें और सुरक्षा के लिए प्रार्थना करें, काली के लिए और गुड़हल अर्पित करें, या सूर्य के लिए और पूर्व की ओर प्रार्थना करें।", te: "శనికి నీలం ధరించి రక్షణ కోసం ప్రార్థించండి, కాళీకి మందారం సమర్పించండి, లేదా సూర్యునికి తూర్పు దిశలో ప్రార్థించండి." } } }
+      { name: "Sunday", deity: { en: "Surya or Durga", hi: "सूर्य या दुर्गा", te: "సూర్యుడు లేదా దుర్గ" }, color: "Maroon", image: "https://i.pinimg.com/originals/44/8c/a4/448ca414e77025b8273286b366d5eaa3.gif", tips: { male: { en: "Wear maroon for Surya and offer water at sunrise, or for Durga and chant Durga mantras.", hi: "सूर्य के लिए मैरून पहनें और सूर्योदय पर जल अर्पित करें, या दुर्गा के लिए और दुर्गा मंत्र जपें।", te: "సూర్యునికి మెరూన్ ధరించి ఉదయాన్నే నీరు సమర్పించండి, లేదా దుర్గకు దుర్గా మంత్రాలు జపించండి." }, female: { en: "Wear maroon for Surya and pray facing east, or for Durga and offer red flowers.", hi: "सूर्य के लिए मैरून पहनें और पूर्व की ओर प्रार्थना करें, या दुर्गा के लिए और लाल फूल अर्पित करें।", te: "సూర్యునికి మెరూన్ ధరించి తూర్పు దిశలో ప్రార్థించండి, లేదా దుర్గకు ఎరుపు పుష్పాలు సమర్పించండి." } } },
+      { name: "Monday", deity: { en: "Shiva or Parvati", hi: "शिव या पार्वती", te: "శివుడు లేదా పార్వతి" }, color: "White", image: "https://i.pinimg.com/originals/fa/ba/c3/fabac3f50522ae1bbda98da8390325ce.gif", tips: { male: { en: "Wear white for Shiva and chant 'Om Namah Shivaya', or for Parvati and offer bilva leaves.", hi: "शिव के लिए सफेद पहनें और 'ॐ नमः शिवाय' जपें, या पार्वती के लिए और बिल्व पत्र अर्पित करें।", te: "శివునికి తెలుపు ధరించి 'ఓం నమః శివాయ' జపించండి, లేదా పార్వతికి మారేడు ఆకులు సమర్పించండి." }, female: { en: "Wear white for Shiva and offer milk to Shiva linga, or for Parvati and pray for harmony.", hi: "शिव के लिए सफेद पहनें और शिवलिंग पर दूध अर्पित करें, या पार्वती के लिए और सौहार्द के लिए प्रार्थना करें।", te: "శివునికి తెలుపు ధరించి శివలింగానికి పాలు సమర్పించండి, లేదా పార్వతికి సామరస్యం కోసం ప్రార్థించండి." } } },
+      { name: "Tuesday", deity: { en: "Durga, Kali or Hanuman", hi: "दुर्गा, काली या हनुमान", te: "దుర్గ, కాళీ లేదా హనుమాన్" }, colorMale: "Red", colorFemale: "Saffron", image: "https://i.pinimg.com/originals/26/86/46/268646032cde46546e0b17c570a181f0.gif", tips: { male: { en: "Wear red for Durga and chant mantras, for Kali and offer hibiscus, or for Hanuman and chant Hanuman Chalisa.", hi: "दुर्गा के लिए लाल पहनें और मंत्र जपें, काली के लिए और गुड़हल अर्पित करें, या हनुमान के लिए और हनुमान चालीसा पढ़ें।", te: "దుర్గకు ఎరుపు ధరించి మంత్రాలు జపించండి, కాళీకి మందారం సమర్పించండి, లేదా హనుమాన్‌కు హనుమాన్ చాలీసా పారాయణం చేయండి." }, female: { en: "Wear saffron for Durga and offer red flowers, for Kali and pray for strength, or for Hanuman and offer sindoor.", hi: "दुर्गा के लिए केसरिया पहनें और लाल फूल अर्पित करें, काली के लिए और शक्ति के लिए प्रार्थना करें, या हनुमान के लिए और सिंदूर अर्पित करें।", te: "దుర్గకు కాషాయం ధరించి ఎరుపు పుష్పాలు సమర్పించండి, కాళీకి శక్తి కోసం ప్రార్థించండి, లేదా హనుమాన్‌కు సిందూరం సమర్పించండి." } } },
+      { name: "Wednesday", deity: { en: "Ganesha or Ayyappa", hi: "गणेश या अय्यप्पा", te: "గణేశుడు లేదా అయ్యప్ప" }, color: "Green", image: "https://i.pinimg.com/originals/09/74/5b/09745b1ef070b6929fc520243e90d8b7.gif", tips: { male: { en: "Wear green for Ganesha and offer modak, or for Ayyappa and chant 'Swamiye Saranam Ayyappa'.", hi: "गणेश के लिए हरा पहनें और मोदक अर्पित करें, या अय्यप्पा के लिए और 'स्वामीये शरणम अय्यप्पा' जपें।", te: "గణేశునికి ఆకుపచ్చ ధరించి మోదకాలు సమర్పించండి, లేదా అయ్యప్పకు 'స్వామియే శరణం అయ్యప్ప' జపించండి." }, female: { en: "Wear green for Ganesha and pray for success, or for Ayyappa and offer ghee lamps.", hi: "गणेश के लिए हरा पहनें और सफलता की प्रार्थना करें, या अय्यप्पा के लिए और घी का दीपक अर्पित करें।", te: "గణేశునికి ఆకుపచ్చ ధరించి విజయం కోసం ప్రార్థించండి, లేదా అయ్యప్పకు నెయ్యి దీపాలు సమర్పించండి." } } },
+      { name: "Thursday", deity: { en: "Brihaspati or Lakshmi", hi: "बृहस्पति या लक्ष्मी", te: "బృహస్పతి లేదా లక్ష్మి" }, color: "Yellow", image: "https://i.pinimg.com/originals/22/a2/ed/22a2ed183673a013f4f1ae42ebd9860d.gif", tips: { male: { en: "Wear yellow for Brihaspati and pray for wisdom, or for Lakshmi and worship for prosperity.", hi: "बृहस्पति के लिए पीला पहनें और बुद्धि के लिए प्रार्थना करें, या लक्ष्मी के लिए और समृद्धि के लिए पूजा करें।", te: "బృహస్పతికి పసుపు ధరించి జ్ఞానం కోసం ప్రార్థించండి, లేదా లక్ష్మికి సంపద కోసం పూజించండి." }, female: { en: "Wear yellow for Brihaspati and offer turmeric, or for Lakshmi and offer lotus flowers.", hi: "बृहस्पति के लिए पीला पहनें और हल्दी अर्पित करें, या लक्ष्मी के लिए और कमल के फूल अर्पित करें।", te: "బృహస్పతికి పసుపు ధరించి పసుపు సమర్పించండి, లేదా లక్ష్మికి తామర పుష్పాలు సమర్పించండి." } } },
+      { name: "Friday", deity: { en: "Durga, Lakshmi or Santoshi Mata", hi: "दुर्गा, लक्ष्मी या संतोषी माता", te: "దుర్గ, లక్ష్మి లేదా సంతోషి మాత" }, color: "Pink", image: "https://i.pinimg.com/originals/f8/ca/e6/f8cae63a049646879bbe5daad901b626.gif", tips: { male: { en: "Wear pink for Durga and chant mantras, for Lakshmi and worship for prosperity, or for Santoshi Mata and offer jaggery.", hi: "दुर्गा के लिए गुलाबी पहनें और मंत्र जपें, लक्ष्मी के लिए और समृद्धि के लिए पूजा करें, या संतोषी माता के लिए और गुड़ अर्पित करें।", te: "దుర్గకు గులాబీ ధరించి మంత్రాలు జపించండి, లక్ష్మికి సంపద కోసం పూజించండి, లేదా సంతోషి మాతకు బెల్లం సమర్పించండి." }, female: { en: "Wear pink for Durga and offer red flowers, for Lakshmi and offer lotus flowers, or for Santoshi Mata and pray for contentment.", hi: "दुर्गा के लिए गुलाबी पहनें और लाल फूल अर्पित करें, लक्ष्मी के लिए और कमल के फूल अर्पित करें, या संतोषी माता के लिए और संतोष के लिए प्रार्थना करें।", te: "దుర్గకు గులాబీ ధరించి ఎరుపు పుష్పాలు సమర్పించండి, లక్ష్మికి తామర పుష్పాలు సమర్పించండి, లేదా సంతోషి మాతకు సంతృప్తి కోసం ప్రార్థించండి." } } },
+      { name: "Saturday", deity: { en: "Shani, Kali or Surya", hi: "शनि, काली या सूर्य", te: "శని, కాళీ లేదా సూర్యుడు" }, color: "NavyBlue", image: "https://i.pinimg.com/originals/82/2a/fc/822afc5b6d4864bc0fa943e795e539fa.gif", tips: { male: { en: "Wear navy blue for Shani and offer oil, for Kali and chant mantras, or for Surya and offer water at sunrise.", hi: "शनि के लिए नेवी नीला पहनें और तेल अर्पित करें, काली के लिए और मंत्र जपें, या सूर्य के लिए और सूर्योदय पर जल अर्पित करें।", te: "శనికి నీలం ధరించి నూనె సమర్పించండి, కాళీకి మంత్రాలు జపించండి, లేదా సూర్యునికి ఉదయాన్నే నీరు సమర్పించండి." }, female: { en: "Wear navy blue for Shani and pray for protection, for Kali and offer hibiscus, or for Surya and pray facing east.", hi: "शनि के लिए नेवी नीला पहनें और सुरक्षा के लिए प्रार्थना करें, काली के लिए और गुड़हल अर्पित करें, या सूर्य के लिए और पूर्व की ओर प्रार्थना करें।", te: "శనికి నీలం ధరించి రక్షణ కోసం ప్రార్థించండి, కాళీకి మందారం సమర్పించండి, లేదా సూర్యునికి తూర్పు దిశలో ప్రార్థించండి." } } }
     ];
-    
-    let currentIndex = new Date().getDay(); // Direct mapping: Sunday=0, Monday=1, etc.
+
+    let currentIndex = new Date().getDay();
 
     function displayGreeting() {
       const hour = new Date().getHours();
@@ -63,38 +126,71 @@
       document.getElementById('greeting').textContent = greetings[lang][greetingKey];
     }
 
+    function updateColorDisplay() {
+      const lang = document.getElementById('language').value;
+      const data = tipsData[currentIndex];
+      const colorDisplay = document.getElementById('color-display');
+      colorDisplay.innerHTML = '';
+
+      const colors = currentIndex === 2 ? [data.colorMale, data.colorFemale] : [data.color];
+      colors.forEach(colorKey => {
+        if (colorMap[colorKey]) {
+          const colorItem = document.createElement('div');
+          colorItem.className = 'color-item';
+          colorItem.innerHTML = `
+            <div class="color-box" style="background-color: ${colorMap[colorKey].css};"></div>
+            <div class="color-label">${translations[lang].colorTranslations[colorKey]}</div>
+          `;
+          colorDisplay.appendChild(colorItem);
+        }
+      });
+    }
+
     function updateDisplay() {
       const lang = document.getElementById('language').value;
       const gender = document.getElementById('gender').value;
       const data = tipsData[currentIndex];
-      const attireColor = currentIndex === 2 ? (gender === 'male' ? colorMap[data.colorMale] : colorMap[data.colorFemale]) : colorMap[data.color];
+      const attireColor = currentIndex === 2 ? (gender === 'male' ? colorMap[data.colorMale].name : colorMap[data.colorFemale].name) : colorMap[data.color].name;
 
-      // Update static text
+      // Update labels
       document.getElementById('language-label').textContent = translations[lang].languageLabel;
       document.getElementById('gender-label').textContent = translations[lang].genderLabel;
       document.getElementById('close-modal').textContent = translations[lang].closeModal;
 
+      // Update dropdown options
+      const languageSelect = document.getElementById('language');
+      languageSelect.querySelectorAll('option').forEach(option => {
+        option.textContent = translations[lang].languageOptions[option.value];
+      });
+      const genderSelect = document.getElementById('gender');
+      genderSelect.querySelectorAll('option').forEach(option => {
+        option.textContent = translations[lang].genderOptions[option.value];
+      });
+
       // Update current day card
       const currentDay = document.getElementById('current-day');
       currentDay.innerHTML = `
-        <h2>${data.name}</h2>
+        <h2>${translations[lang].dayNames[data.name]}</h2>
         <img src="${data.image}" alt="${data.deity[lang]}" class="deity-image" onerror="this.src='https://via.placeholder.com/128';">
         <p><strong>${translations[lang].deity}:</strong> ${data.deity[lang]}</p>
         <p><strong>${translations[lang].worshipTips}:</strong> ${data.tips[gender][lang]}</p>
       `;
       displayGreeting();
+      updateColorDisplay();
     }
 
     function toggleDayPopup() {
+      const lang = document.getElementById('language').value;
       const dayPopup = document.getElementById('day-popup');
       dayPopup.innerHTML = '';
       tipsData.forEach((day, index) => {
         const dayItem = document.createElement('div');
         dayItem.className = 'day-popup-item';
-        dayItem.textContent = day.name;
+        dayItem.textContent = translations[lang].dayNames[day.name];
         dayItem.onclick = () => {
           currentIndex = index;
           updateDisplay();
+          showModal(index);
           dayPopup.style.display = 'none';
         };
         dayPopup.appendChild(dayItem);
@@ -102,23 +198,32 @@
       dayPopup.style.display = dayPopup.style.display === 'block' ? 'none' : 'block';
     }
 
-    function showModal(index) {
-      const lang = document.getElementById('language').value;
-      const gender = document.getElementById('gender').value;
-      const data = tipsData[index];
-      const attireColor = index === 2 ? (gender === 'male' ? colorMap[data.colorMale] : colorMap[data.colorFemale]) : colorMap[data.color];
-      document.getElementById('modal-day').textContent = data.name;
-      document.getElementById('modal-image').src = data.image;
-      document.getElementById('modal-deity').innerHTML = `<strong>${translations[lang].deity}:</strong> ${data.deity[lang]}`;
-      document.getElementById('modal-attire').innerHTML = `<strong>${translations[lang].attireColor}:</strong> ${attireColor}`;
-      document.getElementById('modal-tips').innerHTML = `<strong>${translations[lang].worshipTips}:</strong> ${data.tips[gender][lang]}`;
-      document.getElementById('modal').style.display = 'block';
-    }
+    // function showModal(index) {
+    //   const lang = document.getElementById('language').value;
+    //   const gender = document.getElementById('gender').value;
+    //   const data = tipsData[index];
+    //   const attireColor = index === 2 ? (gender === 'male' ? colorMap[data.colorMale].name : colorMap[data.colorFemale].name) : colorMap[data.color].name;
+    //   document.getElementById('modal-day').textContent = translations[lang].dayNames[data.name];
+    //   document.getElementById('modal-image').src = data.image;
+    //   document.getElementById('modal-deity').innerHTML = `<strong>${translations[lang].deity}:</strong> ${data.deity[lang]}`;
+    //   document.getElementById('modal-attire').innerHTML = `<strong>${translations[lang].attireColor}:</strong> ${translations[lang].colorTranslations[attireColor]}`;
+    //   document.getElementById('modal-tips').innerHTML = `<strong>${translations[lang].worshipTips}:</strong> ${data.tips[gender][lang]}`;
+    //   document.getElementById('modal').style.display = 'block';
+    //   updateColorDisplay();
+    // }
 
     document.getElementById('menu-icon').onclick = toggleDayPopup;
     document.getElementById('close-modal').onclick = () => {
       document.getElementById('modal').style.display = 'none';
     };
+
+    // Close modal and popup with Esc key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('day-popup').style.display = 'none';
+      }
+    });
 
     // Close popup when clicking outside
     document.addEventListener('click', (e) => {
@@ -129,47 +234,22 @@
       }
     });
 
+    // Custom context menu
+    document.addEventListener("DOMContentLoaded", () => {
+      const customMenu = document.querySelector(".custom-menu");
+      document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        customMenu.style.display = "block";
+        customMenu.style.top = `${event.pageY}px`;
+        customMenu.style.left = `${event.pageX}px`;
+      });
+      document.addEventListener("click", () => {
+        customMenu.style.display = "none";
+      });
+    });
+
     displayGreeting();
     updateDisplay();
   </script>
-  <script>
-        
-        document.addEventListener("DOMContentLoaded", () => {
-            const customMenu = document.querySelector(".custom-menu");
-
-            document.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                if (customMenu) {
-                    customMenu.style.display = "block";
-                    customMenu.style.top = `${event.pageY}px`;
-                    customMenu.style.left = `${event.pageX}px`;
-                }
-            });
-
-            document.addEventListener("click", () => {
-                if (customMenu) {
-                    customMenu.style.display = "none";
-                }
-            });
-        });
-    </script>
-     <script>
-                document.addEventListener("DOMContentLoaded", () => {
-            const customMenu = document.querySelector(".custom-menu");
-        
-            // Show custom menu on right-click
-            document.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                customMenu.style.display = "block";
-                customMenu.style.top = `${event.pageY}px`;
-                customMenu.style.left = `${event.pageX}px`;
-            });
-        
-            // Hide the menu when clicking elsewhere
-            document.addEventListener("click", () => {
-                customMenu.style.display = "none";
-            });
-        });
-            </script>
 </body>
 </html>
